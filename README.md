@@ -4,15 +4,58 @@
 
 ### 🏀 [**Live dashboard → bracketology-mjg9byoukgakvqnrfcdjtx.streamlit.app**](https://bracketology-mjg9byoukgakvqnrfcdjtx.streamlit.app/)
 
-![Python](https://img.shields.io/badge/python-3.9%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B) ![Model](https://img.shields.io/badge/model-Logistic%20Regression-orange) [![Live](https://img.shields.io/badge/dashboard-live-success)](https://bracketology-mjg9byoukgakvqnrfcdjtx.streamlit.app/)
+![Python](https://img.shields.io/badge/python-3.9%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B) ![Model](https://img.shields.io/badge/Model-XGBoost%2B%20LogReg-orange)
+
+---
+
+## 📊 **Dashboard Previews**
+
+### 📈 Forecast Tab — Championship Probabilities & Round Advancement
 
 ![Forecast tab — championship probabilities + round advancement matrix](screenshots/01-forecast.png)
+
+**What you're seeing:**
+- **Championship probability bar chart** with each NBA team in its official color
+- **Round-advancement heatmap** showing likelihood of reaching Conference Semis, Conf Finals, NBA Finals, and championship
+- **Finals MVP Watch** leaderboard ranking players by appearance probability
+- Live, interactive predictions updated as games finish
+
+### 🌳 Bracket Tab — Playoff Tree with Live Odds
+
+![Bracket tab — Eastern & Western Conference playoffs with series cards and probabilities](screenshots/03-bracket.png)
+
+**What you're seeing:**
+- Real-time bracket tree across 4 playoff rounds (Round 1 → Conference Semis → Conf Finals → NBA Finals)
+- Each series card displays current score, eliminated teams (open bullet), and **model's probability to advance**
+- East/West split with team colors matching official NBA branding
+- Live elimination tracking
+
+### 🎯 Games Tab — Predictions & Vegas Line Comparison
+
+![Games tab — upcoming game predictions with Vegas lines and historical box scores](screenshots/04-games.png)
+
+**What you're seeing:**
+- Upcoming games with **predicted scores** (e.g., "CLE 112 - DET 107")
+- **Vegas line comparison** with edge highlighting (where model disagrees with the market)
+- Recent results explorer with full box-score drill-down
+- Tip-off times and live in-progress updates
+
+### 📉 Backtesting Tab — Model Validation & Calibration
+
+![Backtesting tab — per-round Brier, calibration curve, and honest verdict](screenshots/02-backtesting.png)
+
+**What you're seeing:**
+- **Walk-forward backtest** results (model retrained on prior seasons, tested on each subsequent season)
+- Per-round Brier score with error bars (lower is better)
+- Calibration curve showing if predicted probabilities match realized outcomes
+- Honest performance summary: model beats 50/50 baseline in 3 of 6 seasons; loses in 3
+- Per-season log loss breakdown
 
 ---
 
 ## Why I built this
 
-The NBA playoffs are widely covered, but most public dashboards either show static seedings (no uncertainty) or pure betting lines (no model). I wanted to build the full loop end-to-end — scraping → feature engineering → modeling → simulation → interactive UI — and see how much signal a modest 1k-row training set can extract from publicly available stats. The result is a working forecast pipeline plus a Streamlit dashboard you can refresh daily.
+The NBA playoffs are widely covered, but most public dashboards either show static seedings (no uncertainty) or pure betting lines (no model). I wanted to build the full loop end-to-end — scraping, feature engineering, training, and live Monte Carlo simulation — all in one transparent, open-source application.
 
 ---
 
@@ -151,20 +194,18 @@ Each row = one (game, team-perspective). Two rows per game (home and away).
 | XGBoost (val) | 0.6574 | 0.232 | 65.9% |
 | XGBoost (test) | 0.6618 | 0.235 | 60.7% |
 
-Both models beat the 50/50 baseline by ~6%. Test-set log loss is within ~1.5% of validation — modest overfitting but acceptable. Calibration plot tracks the diagonal with slight overconfidence at the 0.7+ end.
+Both models beat the 50/50 baseline by ~6%. Test-set log loss is within ~1.5% of validation — modest overfitting but acceptable. Calibration plot tracks the diagonal with slight overconfidence in high-confidence predictions.
 
 ### Walk-forward backtest
 
 The dashboard's Backtesting tab retrains the model on prior seasons only and predicts each subsequent season game-by-game. The result is intentionally surfaced honestly, not hidden:
-
-![Backtesting tab — per-round Brier, calibration curve, and honest verdict](screenshots/02-backtesting.png)
 
 - Average walk-forward log loss: **0.712** — *below* the 0.693 chance baseline
 - Higher-net-rating heuristic averages **0.672** — outperforms the model on average
 - Model beats chance in 3 of 6 backtested seasons; loses in the other 3
 - Round-1 games are hardest; Conf Semis & Conf Finals are best-predicted
 
-This is the kind of result most portfolio projects bury. The takeaway: with only ~1,200 training rows, marginal features beyond net-rating differential are noisy. Future improvements (live injury data, player-level features, more seasons) should narrow the gap.
+This is the kind of result most portfolio projects bury. The takeaway: with only ~1,200 training rows, marginal features beyond net-rating differential are noisy. Future improvements (live injury tracking, player-level stats) would help.
 
 **Top XGBoost feature importances:**
 1. `diff_ts_pct` (true-shooting % differential) — 0.075
@@ -176,13 +217,13 @@ This is the kind of result most portfolio projects bury. The takeaway: with only
 ### Limitations
 - **No live injury data.** The live simulator hard-codes `stars_active = 3` for every team. Historical training data uses real per-game star presence, but at prediction time we have no injury feed.
 - **Static rolling form during simulation.** A team's last-5 rolling stats are computed once from current real games; they don't update as the simulator advances them through hypothetical wins/losses.
-- **Modest training set.** ~1,200 rows is small. XGBoost over-fits beyond ~50 trees (early stopping caps it at iteration 45). More seasons or game-level training would help.
+- **Modest training set.** ~1,200 rows is small. XGBoost overfits beyond ~50 trees (early stopping caps it at iteration 45). More seasons or game-level training would help.
 - **Static reg-season stats.** Team advanced metrics are season totals; ratings during the playoffs themselves often shift due to defensive intensity / matchup-specific dynamics.
 - **Default 2-day rest.** Simulator doesn't track simulated game dates, so rest_diff is fixed at 0.
 - **Data source unofficial.** stats.nba.com endpoints used via `nba_api` are not an official public API. Commercial usage has unclear ToS implications.
 
 ### Intended Use
-This is a **portfolio / educational project**. The forecast is for informational purposes, not betting advice. ~65% game accuracy is competitive with public NBA prediction baselines but well below Vegas closing lines (~67–70% on moneyline favorites).
+This is a **portfolio / educational project**. The forecast is for informational purposes, not betting advice. ~65% game accuracy is competitive with public NBA prediction baselines but well below professional sportsbooks.
 
 ---
 
@@ -209,7 +250,7 @@ Regenerable artifacts (`cache/`, `data/*.csv`, `model.pkl`, `reports/`) are excl
 
 ## Tech stack
 
-**Data:** `nba_api` (stats.nba.com client) · **Modeling:** scikit-learn (LogisticRegression, StandardScaler, SimpleImputer, calibration_curve), xgboost (gradient boosting w/ early stopping) · **Simulation:** custom Monte Carlo in pure Python · **Viz:** Plotly, Matplotlib · **UI:** Streamlit + custom CSS · **Persistence:** joblib, pickle, pandas
+**Data:** `nba_api` (stats.nba.com client) · **Modeling:** scikit-learn (LogisticRegression, StandardScaler, SimpleImputer, calibration_curve), xgboost (gradient boosting w/ early stopping) · **Simulation:** numpy (vectorized random sampling) · **Dashboard:** Streamlit (multi-tab layout, Plotly charts, selectbox filters) · **CI:** pytest · **Python:** 3.9+
 
 ---
 
