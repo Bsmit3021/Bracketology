@@ -2,11 +2,11 @@
 
 > End-to-end ML pipeline that quantifies championship uncertainty for the NBA playoffs. Scrapes live games, trains a win-probability model on 7 seasons of historical playoff data, and runs 10,000-trial Monte Carlo simulations to project each team's odds of reaching every round.
 
-![Python](https://img.shields.io/badge/python-3.9%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B) ![Model](https://img.shields.io/badge/model-Logistic%20Regression-orange)
+### 🏀 [**Live dashboard → bracketology-mjg9byoukgakvqnrfcdjtx.streamlit.app**](https://bracketology-mjg9byoukgakvqnrfcdjtx.streamlit.app/)
 
-<!-- Add a hero screenshot here once you capture one:
-![Dashboard hero](screenshots/dashboard-hero.png)
--->
+![Python](https://img.shields.io/badge/python-3.9%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B) ![Model](https://img.shields.io/badge/model-Logistic%20Regression-orange) [![Live](https://img.shields.io/badge/dashboard-live-success)](https://bracketology-mjg9byoukgakvqnrfcdjtx.streamlit.app/)
+
+![Forecast tab — championship probabilities + round advancement matrix](screenshots/01-forecast.png)
 
 ---
 
@@ -111,17 +111,11 @@ Four tabs, dark theme, NBA team colors throughout:
 
 | Tab | What it shows |
 |---|---|
-| 📊 **Forecast** | Horizontal championship-probability bar chart (each team in its primary color) and a color-graded round-advancement matrix |
-| 🌳 **Bracket** | Eastern + Western conferences laid out across 4 rounds; each series card shows current score, eliminated team (open bullet), and probability to advance to the next round |
-| 🎯 **Games** | Upcoming games with tip-off times, recent results with winner highlighted, full box-score explorer with PTS heatmap |
-| 📈 **Teams** | Reg-season scoring leader per team (PPG, team-colored), plus an active-series tracker |
-
-<!-- Add screenshots:
-![Forecast tab](screenshots/forecast.png)
-![Bracket tab](screenshots/bracket.png)
-![Games tab](screenshots/games.png)
-![Teams tab](screenshots/teams.png)
--->
+| 📊 **Forecast** | Horizontal championship-probability bar chart (each team in its primary color), color-graded round-advancement matrix, and the **Finals MVP Watch** leaderboard |
+| 🌳 **Bracket** | Eastern + Western conferences laid out across 4 rounds; each series card shows current score, eliminated team (open bullet), and probability to advance |
+| 🎯 **Games** | Upcoming games with tip-off times, **predicted scores** (e.g. "CLE 112 - DET 107"), **Vegas line comparison** with edge highlighting, recent results, full box-score explorer |
+| 📈 **Teams** | Reg-season scoring leader per team (PPG, team-colored), active-series tracker |
+| 📉 **Backtesting** | Walk-forward evaluation with per-season log loss, per-round Brier with error bars, calibration curve, and an honest verdict |
 
 ---
 
@@ -158,6 +152,19 @@ Each row = one (game, team-perspective). Two rows per game (home and away).
 | XGBoost (test) | 0.6618 | 0.235 | 60.7% |
 
 Both models beat the 50/50 baseline by ~6%. Test-set log loss is within ~1.5% of validation — modest overfitting but acceptable. Calibration plot tracks the diagonal with slight overconfidence at the 0.7+ end.
+
+### Walk-forward backtest
+
+The dashboard's Backtesting tab retrains the model on prior seasons only and predicts each subsequent season game-by-game. The result is intentionally surfaced honestly, not hidden:
+
+![Backtesting tab — per-round Brier, calibration curve, and honest verdict](screenshots/02-backtesting.png)
+
+- Average walk-forward log loss: **0.712** — *below* the 0.693 chance baseline
+- Higher-net-rating heuristic averages **0.672** — outperforms the model on average
+- Model beats chance in 3 of 6 backtested seasons; loses in the other 3
+- Round-1 games are hardest; Conf Semis & Conf Finals are best-predicted
+
+This is the kind of result most portfolio projects bury. The takeaway: with only ~1,200 training rows, marginal features beyond net-rating differential are noisy. Future improvements (live injury data, player-level features, more seasons) should narrow the gap.
 
 **Top XGBoost feature importances:**
 1. `diff_ts_pct` (true-shooting % differential) — 0.075
