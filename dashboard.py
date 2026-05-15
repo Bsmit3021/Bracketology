@@ -218,6 +218,7 @@ def load_data():
     injuries = pd.read_csv(DATA / "injury_report.csv") if (DATA / "injury_report.csv").exists() else pd.DataFrame()
     vegas = pd.read_csv(DATA / "vegas_lines.csv") if (DATA / "vegas_lines.csv").exists() else pd.DataFrame()
     upcoming = pd.read_csv(DATA / "upcoming_game_predictions.csv") if (DATA / "upcoming_game_predictions.csv").exists() else pd.DataFrame()
+    mvp = pd.read_csv(DATA / "mvp_candidates.csv") if (DATA / "mvp_candidates.csv").exists() else pd.DataFrame()
 
     bundle = joblib.load(MODEL_PATH) if MODEL_PATH.exists() else None
 
@@ -232,6 +233,7 @@ def load_data():
         "injuries": injuries,
         "vegas": vegas,
         "upcoming": upcoming,
+        "mvp": mvp,
         "model": bundle,
         "games_path": games_path,
         "box_path": box_path,
@@ -284,9 +286,9 @@ with st.sidebar:
             st.error("Scrape failed — see log below.")
         with st.expander("Output"):
             st.code(out, language="text")
-    if col_b.button("🔮 Predict", use_container_width=True, help="Re-run Monte Carlo bracket simulator. Takes ~5 sec."):
-        with st.spinner("Running predict_bracket.py..."):
-            ok, out = run_pipeline(["predict_bracket"])
+    if col_b.button("🔮 Predict", use_container_width=True, help="Re-run Monte Carlo bracket simulator + MVP forecaster. Takes ~10 sec."):
+        with st.spinner("Running predict_bracket.py + compute_mvp.py..."):
+            ok, out = run_pipeline(["predict_bracket", "compute_mvp"])
         if ok:
             st.cache_data.clear()
             st.success("Predicted.")
@@ -509,6 +511,44 @@ with tab_forecast:
         "with slight overconfidence in 0.7+ predictions."
     )
 
+    st.write("")
+    st.markdown('<div class="section-title">🏆 Finals MVP Watch — If the Finals Started Today</div>',
+                unsafe_allow_html=True)
+    mvp = data["mvp"]
+    if mvp.empty:
+        st.info("No MVP forecast yet. After running **🔮 Predict**, MVP candidates will appear here.")
+    else:
+        st.caption(
+            "Formula-based proxy: 50% champion probability · 30% playoff PPG · "
+            "10% APG · 10% RPG. Normalized across all candidates from teams with ≥5% Finals odds."
+        )
+        # Show top 8 with team-colored bars
+        top_mvp = mvp.head(8).copy()
+        max_score = top_mvp["mvp_score"].max() if not top_mvp.empty else 1.0
+        for _, c in top_mvp.iterrows():
+            color = team_color(c["team_abbr"])
+            bar_pct = (c["mvp_score"] / max_score) * 100 if max_score else 0
+            st.markdown(
+                f"""
+                <div style="display:grid; grid-template-columns: 1.6fr 0.8fr 2fr 0.8fr; gap:12px; align-items:center; padding:6px 0; border-bottom: 1px solid rgba(255,255,255,0.05)">
+                  <div style="font-weight:700; color:white">{c['player_name']}</div>
+                  <div style="color:{color}; font-weight:700">{c['team_abbr']}</div>
+                  <div style="background:rgba(255,255,255,0.04); border-radius:6px; height:18px; overflow:hidden; position:relative">
+                    <div style="background:{color}; width:{bar_pct:.0f}%; height:100%"></div>
+                  </div>
+                  <div style="text-align:right; color:#C8CDD7; font-variant-numeric:tabular-nums">
+                    <b>{c['mvp_prob']:.1%}</b>
+                    <span style="color:#6B7280; font-size:0.75rem"> · {c['playoff_ppg']:.1f} ppg</span>
+                  </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        st.caption(
+            f"Showing top 8 of {len(mvp)} candidates. Spreads are tight when several teams share similar championship odds — "
+            "the model isn't claiming any single player runs away with the trophy."
+        )
+
 
 # ===========================================================================
 # Tab 2: Bracket
@@ -722,10 +762,20 @@ with tab_games:
             home, away = r["home_team"], r["away_team"]
             ph = r["model_home_win_prob"]; pa = 1 - ph
             hc, ac = team_color(home), team_color(away)
+            score_line = ""
+            if pd.notna(r.get("pred_home_pts")) and pd.notna(r.get("pred_away_pts")):
+                score_line = (
+                    f'<div style="font-size:0.85rem; color:#C8CDD7; margin-top:4px">'
+                    f'<span style="color:#FB8332; font-weight:700">PREDICTED SCORE:</span> '
+                    f'<span style="color:{ac}">{away} {r["pred_away_pts"]:.0f}</span> @ '
+                    f'<span style="color:{hc}">{home} {r["pred_home_pts"]:.0f}</span>'
+                    f'</div>'
+                )
             st.markdown(
                 f"""
                 <div class="series-card" style="margin-bottom:6px">
                   <div class="series-meta">{r['game_label']} · {r['series']} · {r['tipoff_et']}</div>
+                  {score_line}
                   <div class="series-row">
                     <span class="series-team" style="color:{hc}">{home}</span>
                     <span class="series-score">{ph:.0%} model</span>
@@ -765,6 +815,15 @@ with tab_games:
                 ao = int(r["away_american_odds"])
                 ho_str = f"+{ho}" if ho > 0 else f"{ho}"
                 ao_str = f"+{ao}" if ao > 0 else f"{ao}"
+                score_line = ""
+                if pd.notna(r.get("pred_home_pts")) and pd.notna(r.get("pred_away_pts")):
+                    score_line = (
+                        f'<div style="font-size:0.85rem; color:#C8CDD7; margin-top:4px; margin-bottom:4px">'
+                        f'<span style="color:#FB8332; font-weight:700">PREDICTED SCORE:</span> '
+                        f'<span style="color:{ac}">{away} {r["pred_away_pts"]:.0f}</span> @ '
+                        f'<span style="color:{hc}">{home} {r["pred_home_pts"]:.0f}</span>'
+                        f'</div>'
+                    )
                 st.markdown(
                     f"""
                     <div class="series-card" style="margin-bottom:6px; {'border-left: 3px solid ' + edge_color + ';' if sharp else ''}">
@@ -773,6 +832,7 @@ with tab_games:
                         <span style="color:{edge_color}; font-weight:700">{edge_label}</span>
                         <span style="color:#6B7280"> · {r['bookmaker']}</span>
                       </div>
+                      {score_line}
                       <div style="display:grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap:8px; align-items:center; padding-top:4px">
                         <div><span class="series-team" style="color:{hc}">{home}</span></div>
                         <div style="text-align:right; color:#C8CDD7"><b>{p_model_h:.0%}</b> model</div>

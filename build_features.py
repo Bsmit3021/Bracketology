@@ -301,6 +301,7 @@ def build_season_features(season: str, include_stars: bool = True) -> pd.DataFra
                 form_team, form_opp = home_form, away_form
                 stars_team, stars_opp = home_stars, away_stars
                 won = 1 if home_pts > away_pts else 0
+                pts_team, pts_opp = home_pts, away_pts
             else:
                 team_id, opp_id = away_id, home_id
                 is_home = 0
@@ -309,6 +310,7 @@ def build_season_features(season: str, include_stars: bool = True) -> pd.DataFra
                 form_team, form_opp = away_form, home_form
                 stars_team, stars_opp = away_stars, home_stars
                 won = 1 if away_pts > home_pts else 0
+                pts_team, pts_opp = away_pts, home_pts
 
             adv_team = adv_lookup.get(team_id, {})
             adv_opp = adv_lookup.get(opp_id, {})
@@ -321,6 +323,9 @@ def build_season_features(season: str, include_stars: bool = True) -> pd.DataFra
                 "opp_team_id": opp_id,
                 "is_home": is_home,
                 "won": won,
+                # Regression targets for the score-prediction model
+                "pts_team": pts_team,
+                "pts_opp": pts_opp,
                 # Series context
                 "series_wins_team": wins_before_team,
                 "series_wins_opp": wins_before_opp,

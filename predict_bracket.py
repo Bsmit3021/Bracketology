@@ -37,6 +37,7 @@ from nba_api.stats.static import teams as _static_teams  # noqa: E402
 ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data"
 MODEL_PATH = ROOT / "model.pkl"
+SCORE_MODEL_PATH = ROOT / "score_model.pkl"
 
 SEASON = "2025-26"
 
@@ -93,6 +94,17 @@ def load_model_bundle():
     bundle = joblib.load(MODEL_PATH)
     log(f"Loaded model: {bundle['model_name']} "
         f"(val log_loss={bundle['val_metrics']['log_loss']:.4f})")
+    return bundle
+
+
+def load_score_model_bundle():
+    """Return score-model bundle, or None if not trained yet."""
+    if not SCORE_MODEL_PATH.exists():
+        log("  (no score_model.pkl found; score predictions will be skipped)")
+        return None
+    bundle = joblib.load(SCORE_MODEL_PATH)
+    log(f"Loaded score model: {bundle['model_name']} "
+        f"(val MAE_avg={bundle['val_metrics']['mae_avg']:.2f} pts)")
     return bundle
 
 
@@ -472,6 +484,7 @@ def main() -> int:
     bundle = load_model_bundle()
     model = bundle["model"]
     feature_cols = bundle["feature_cols"]
+    score_bundle = load_score_model_bundle()
     adv_lookup, abbr_to_id = load_current_team_data()
 
     initial_state = build_initial_state(games_df)
@@ -557,6 +570,16 @@ def main() -> int:
             feature_cols=feature_cols, stars_active_map=stars_active_map,
         )
         p_home = float(model.predict_proba(feats)[0, 1])
+
+        pred_home_pts: float | None = None
+        pred_away_pts: float | None = None
+        if score_bundle is not None:
+            score_feats = feats  # same column order
+            score_pred = score_bundle["model"].predict(score_feats)
+            # Targets: [pts_team, pts_opp] from the home perspective
+            pred_home_pts = float(score_pred[0, 0])
+            pred_away_pts = float(score_pred[0, 1])
+
         upcoming_rows.append({
             "game_id": str(r["game_id"]).zfill(10),
             "game_date_et": str(r.get("game_date_et", "")),
@@ -569,6 +592,8 @@ def main() -> int:
             "wins_away": wins_away,
             "model_home_win_prob": p_home,
             "model_away_win_prob": 1.0 - p_home,
+            "pred_home_pts": pred_home_pts,
+            "pred_away_pts": pred_away_pts,
         })
     upcoming_df = pd.DataFrame(upcoming_rows)
     upcoming_path = DATA / "upcoming_game_predictions.csv"
