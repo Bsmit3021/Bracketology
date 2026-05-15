@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Project-specific — regenerable artifacts
+cache/
+data/*.csv
+model.pkl
+reports/*.png
+
+# Local logs from streamlit / training runs
+*.log
+dashboard_run.log
+build_features.log
+
+# Claude / harness state
+.claude/
+
+# OS
+Thumbs.db

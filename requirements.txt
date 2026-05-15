@@ -1,0 +1,19 @@
+# Core scientific stack
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.3
+xgboost>=2.0
+joblib>=1.3
+
+# NBA data
+nba_api>=1.7
+
+# Visualization
+matplotlib>=3.7
+plotly>=5.18
+
+# Dashboard
+streamlit>=1.30
+
+# Tests (optional)
+pytest>=7.4
