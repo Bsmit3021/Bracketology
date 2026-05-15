@@ -10,46 +10,11 @@
 
 ## 📊 **Dashboard Previews**
 
-### 📈 Forecast Tab — Championship Probabilities & Round Advancement
+### Screenshot 1: Live Dashboard Overview
+![Dashboard Overview](screenshots/Screenshot%202026-05-15%20at%205.35.40%20PM.png)
 
-![Forecast tab — championship probabilities + round advancement matrix](screenshots/01-forecast.png)
-
-**What you're seeing:**
-- **Championship probability bar chart** with each NBA team in its official color
-- **Round-advancement heatmap** showing likelihood of reaching Conference Semis, Conf Finals, NBA Finals, and championship
-- **Finals MVP Watch** leaderboard ranking players by appearance probability
-- Live, interactive predictions updated as games finish
-
-### 🌳 Bracket Tab — Playoff Tree with Live Odds
-
-![Bracket tab — Eastern & Western Conference playoffs with series cards and probabilities](screenshots/03-bracket.png)
-
-**What you're seeing:**
-- Real-time bracket tree across 4 playoff rounds (Round 1 → Conference Semis → Conf Finals → NBA Finals)
-- Each series card displays current score, eliminated teams (open bullet), and **model's probability to advance**
-- East/West split with team colors matching official NBA branding
-- Live elimination tracking
-
-### 🎯 Games Tab — Predictions & Vegas Line Comparison
-
-![Games tab — upcoming game predictions with Vegas lines and historical box scores](screenshots/04-games.png)
-
-**What you're seeing:**
-- Upcoming games with **predicted scores** (e.g., "CLE 112 - DET 107")
-- **Vegas line comparison** with edge highlighting (where model disagrees with the market)
-- Recent results explorer with full box-score drill-down
-- Tip-off times and live in-progress updates
-
-### 📉 Backtesting Tab — Model Validation & Calibration
-
-![Backtesting tab — per-round Brier, calibration curve, and honest verdict](screenshots/02-backtesting.png)
-
-**What you're seeing:**
-- **Walk-forward backtest** results (model retrained on prior seasons, tested on each subsequent season)
-- Per-round Brier score with error bars (lower is better)
-- Calibration curve showing if predicted probabilities match realized outcomes
-- Honest performance summary: model beats 50/50 baseline in 3 of 6 seasons; loses in 3
-- Per-season log loss breakdown
+### Screenshot 2: Additional Dashboard View
+![Dashboard View 2](screenshots/Screenshot%202026-05-15%20at%205.36.17%20PM.png)
 
 ---
 
