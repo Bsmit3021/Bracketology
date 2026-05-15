@@ -72,7 +72,7 @@ The NBA playoffs are widely covered, but most public dashboards either show stat
 ## Quickstart
 
 ```bash
-git clone https://github.com/B3smoove/Bracketology.git
+git clone https://github.com/Bsmit3021/Bracketology.git
 cd Bracketology
 
 # Install dependencies (Python 3.9+)
