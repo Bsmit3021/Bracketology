@@ -26,6 +26,21 @@ data/*.csv
 model.pkl
 reports/*.png
 
+# But: ship a starter dataset so Streamlit Cloud renders on first load.
+# These are forecasts/snapshots; safe to refresh weekly. Daily-volatile files
+# (vegas_lines, injury_report, upcoming_game_predictions) stay excluded.
+!data/champion_probabilities.csv
+!data/round_advancement.csv
+!data/historical_playoff_features.csv
+!data/backtest_results.csv
+!data/backtest_round_brier.csv
+!data/backtest_calibration.csv
+!data/nba_playoffs_games_*.csv
+!data/nba_playoffs_boxscores_*.csv
+
+# Ship the trained model so the cloud Predict button works on first click.
+!model.pkl
+
 # Local logs from streamlit / training runs
 *.log
 dashboard_run.log
@@ -33,6 +48,11 @@ build_features.log
 
 # Claude / harness state
 .claude/
+
+# Secrets — never commit API keys
+config_odds.txt
+.env
+.env.local
 
 # OS
 Thumbs.db

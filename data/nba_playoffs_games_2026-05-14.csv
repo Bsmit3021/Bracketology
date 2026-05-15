@@ -1,0 +1,78 @@
+game_id,game_date_et,status,tipoff_et,series,game_label,home_team,away_team,home_score,away_score,home_reg_season_leader,home_reg_season_ppg,away_reg_season_leader,away_reg_season_ppg
+0042500121,2026-04-18,Final,,,,NYK,ATL,113,102,Jalen Brunson,26.0,Jalen Johnson,22.5
+0042500131,2026-04-18,Final,,,,CLE,TOR,126,113,Donovan Mitchell,27.9,Brandon Ingram,21.5
+0042500161,2026-04-18,Final,,,,DEN,MIN,116,105,Nikola Jokić,27.7,Anthony Edwards,28.8
+0042500171,2026-04-18,Final,,,,LAL,HOU,107,98,Luka Dončić,33.5,Kevin Durant,26.0
+0042500101,2026-04-19,Final,,,,DET,ORL,101,112,Cade Cunningham,23.9,Paolo Banchero,22.2
+0042500111,2026-04-19,Final,,,,BOS,PHI,123,91,Jaylen Brown,28.7,Tyrese Maxey,28.3
+0042500141,2026-04-19,Final,,,,OKC,PHX,119,84,Shai Gilgeous-Alexander,31.1,Devin Booker,26.1
+0042500151,2026-04-19,Final,,,,SAS,POR,111,98,Victor Wembanyama,25.0,Deni Avdija,24.2
+0042500122,2026-04-20,Final,,,,NYK,ATL,106,107,Jalen Brunson,26.0,Jalen Johnson,22.5
+0042500132,2026-04-20,Final,,,,CLE,TOR,115,105,Donovan Mitchell,27.9,Brandon Ingram,21.5
+0042500162,2026-04-20,Final,,,,DEN,MIN,114,119,Nikola Jokić,27.7,Anthony Edwards,28.8
+0042500112,2026-04-21,Final,,,,BOS,PHI,97,111,Jaylen Brown,28.7,Tyrese Maxey,28.3
+0042500152,2026-04-21,Final,,,,SAS,POR,103,106,Victor Wembanyama,25.0,Deni Avdija,24.2
+0042500172,2026-04-21,Final,,,,LAL,HOU,101,94,Luka Dončić,33.5,Kevin Durant,26.0
+0042500102,2026-04-22,Final,,,,DET,ORL,98,83,Cade Cunningham,23.9,Paolo Banchero,22.2
+0042500142,2026-04-22,Final,,,,OKC,PHX,120,107,Shai Gilgeous-Alexander,31.1,Devin Booker,26.1
+0042500123,2026-04-23,Final,,,,ATL,NYK,109,108,Jalen Johnson,22.5,Jalen Brunson,26.0
+0042500133,2026-04-23,Final,,,,TOR,CLE,126,104,Brandon Ingram,21.5,Donovan Mitchell,27.9
+0042500163,2026-04-23,Final,,,,MIN,DEN,113,96,Anthony Edwards,28.8,Nikola Jokić,27.7
+0042500113,2026-04-24,Final,,,,PHI,BOS,100,108,Tyrese Maxey,28.3,Jaylen Brown,28.7
+0042500153,2026-04-24,Final,,,,POR,SAS,108,120,Deni Avdija,24.2,Victor Wembanyama,25.0
+0042500173,2026-04-24,Final,,,,HOU,LAL,108,112,Kevin Durant,26.0,Luka Dončić,33.5
+0042500103,2026-04-25,Final,,,,ORL,DET,113,105,Paolo Banchero,22.2,Cade Cunningham,23.9
+0042500124,2026-04-25,Final,,,,ATL,NYK,98,114,Jalen Johnson,22.5,Jalen Brunson,26.0
+0042500143,2026-04-25,Final,,,,PHX,OKC,109,121,Devin Booker,26.1,Shai Gilgeous-Alexander,31.1
+0042500164,2026-04-25,Final,,,,MIN,DEN,112,96,Anthony Edwards,28.8,Nikola Jokić,27.7
+0042500114,2026-04-26,Final,,,,PHI,BOS,96,128,Tyrese Maxey,28.3,Jaylen Brown,28.7
+0042500134,2026-04-26,Final,,,,TOR,CLE,93,89,Brandon Ingram,21.5,Donovan Mitchell,27.9
+0042500154,2026-04-26,Final,,,,POR,SAS,93,114,Deni Avdija,24.2,Victor Wembanyama,25.0
+0042500174,2026-04-26,Final,,,,HOU,LAL,115,96,Kevin Durant,26.0,Luka Dončić,33.5
+0042500104,2026-04-27,Final,,,,ORL,DET,94,88,Paolo Banchero,22.2,Cade Cunningham,23.9
+0042500144,2026-04-27,Final,,,,PHX,OKC,122,131,Devin Booker,26.1,Shai Gilgeous-Alexander,31.1
+0042500165,2026-04-27,Final,,,,DEN,MIN,125,113,Nikola Jokić,27.7,Anthony Edwards,28.8
+0042500115,2026-04-28,Final,,,,BOS,PHI,97,113,Jaylen Brown,28.7,Tyrese Maxey,28.3
+0042500125,2026-04-28,Final,,,,NYK,ATL,126,97,Jalen Brunson,26.0,Jalen Johnson,22.5
+0042500155,2026-04-28,Final,,,,SAS,POR,114,95,Victor Wembanyama,25.0,Deni Avdija,24.2
+0042500105,2026-04-29,Final,,,,DET,ORL,116,109,Cade Cunningham,23.9,Paolo Banchero,22.2
+0042500135,2026-04-29,Final,,,,CLE,TOR,125,120,Donovan Mitchell,27.9,Brandon Ingram,21.5
+0042500175,2026-04-29,Final,,,,LAL,HOU,93,99,Luka Dončić,33.5,Kevin Durant,26.0
+0042500116,2026-04-30,Final,,,,PHI,BOS,106,93,Tyrese Maxey,28.3,Jaylen Brown,28.7
+0042500126,2026-04-30,Final,,,,ATL,NYK,89,140,Jalen Johnson,22.5,Jalen Brunson,26.0
+0042500166,2026-04-30,Final,,,,MIN,DEN,110,98,Anthony Edwards,28.8,Nikola Jokić,27.7
+0042500106,2026-05-01,Final,,,,ORL,DET,79,93,Paolo Banchero,22.2,Cade Cunningham,23.9
+0042500136,2026-05-01,Final,,,,TOR,CLE,112,110,Brandon Ingram,21.5,Donovan Mitchell,27.9
+0042500176,2026-05-01,Final,,,,HOU,LAL,78,98,Kevin Durant,26.0,Luka Dončić,33.5
+0042500117,2026-05-02,Final,,,,BOS,PHI,100,109,Jaylen Brown,28.7,Tyrese Maxey,28.3
+0042500107,2026-05-03,Final,,,,DET,ORL,116,94,Cade Cunningham,23.9,Paolo Banchero,22.2
+0042500137,2026-05-03,Final,,,,CLE,TOR,114,102,Donovan Mitchell,27.9,Brandon Ingram,21.5
+0042500211,2026-05-04,Final,,,,NYK,PHI,137,98,Jalen Brunson,26.0,Tyrese Maxey,28.3
+0042500231,2026-05-04,Final,,,,SAS,MIN,102,104,Victor Wembanyama,25.0,Anthony Edwards,28.8
+0042500201,2026-05-05,Final,,,,DET,CLE,111,101,Cade Cunningham,23.9,Donovan Mitchell,27.9
+0042500221,2026-05-05,Final,,,,OKC,LAL,108,90,Shai Gilgeous-Alexander,31.1,Luka Dončić,33.5
+0042500212,2026-05-06,Final,,,,NYK,PHI,108,102,Jalen Brunson,26.0,Tyrese Maxey,28.3
+0042500232,2026-05-06,Final,,,,SAS,MIN,133,95,Victor Wembanyama,25.0,Anthony Edwards,28.8
+0042500202,2026-05-07,Final,,,,DET,CLE,107,97,Cade Cunningham,23.9,Donovan Mitchell,27.9
+0042500222,2026-05-07,Final,,,,OKC,LAL,125,107,Shai Gilgeous-Alexander,31.1,Luka Dončić,33.5
+0042500213,2026-05-08,Final,,,,PHI,NYK,94,108,Tyrese Maxey,28.3,Jalen Brunson,26.0
+0042500233,2026-05-08,Final,,,,MIN,SAS,108,115,Anthony Edwards,28.8,Victor Wembanyama,25.0
+0042500203,2026-05-09,Final,,,,CLE,DET,116,109,Donovan Mitchell,27.9,Cade Cunningham,23.9
+0042500223,2026-05-09,Final,,,,LAL,OKC,108,131,Luka Dončić,33.5,Shai Gilgeous-Alexander,31.1
+0042500214,2026-05-10,Final,,,,PHI,NYK,114,144,Tyrese Maxey,28.3,Jalen Brunson,26.0
+0042500234,2026-05-10,Final,,,,MIN,SAS,114,109,Anthony Edwards,28.8,Victor Wembanyama,25.0
+0042500204,2026-05-11,Final,,,,CLE,DET,112,103,Donovan Mitchell,27.9,Cade Cunningham,23.9
+0042500224,2026-05-11,Final,,,,LAL,OKC,110,115,Luka Dončić,33.5,Shai Gilgeous-Alexander,31.1
+0042500235,2026-05-12,Final,,,,SAS,MIN,126,97,Victor Wembanyama,25.0,Anthony Edwards,28.8
+0042500205,2026-05-13,Final,,,,DET,CLE,113,117,Cade Cunningham,23.9,Donovan Mitchell,27.9
+0042500206,2026-05-15,Scheduled,2026-05-15 19:00 ET,CLE leads 3-2,East Conf. Semifinals,CLE,DET,,,Donovan Mitchell,27.9,Cade Cunningham,23.9
+0042500236,2026-05-15,Scheduled,2026-05-15 21:30 ET,SAS leads 3-2,West Conf. Semifinals,MIN,SAS,,,Anthony Edwards,28.8,Victor Wembanyama,25.0
+0042500207,2026-05-17,Scheduled,2026-05-17 00:00 ET,CLE leads 3-2,East Conf. Semifinals,DET,CLE,,,Cade Cunningham,23.9,Donovan Mitchell,27.9
+0042500237,2026-05-17,Scheduled,2026-05-17 00:00 ET,SAS leads 3-2,West Conf. Semifinals,SAS,MIN,,,Victor Wembanyama,25.0,Anthony Edwards,28.8
+0042500401,2026-06-03,Scheduled,2026-06-03 20:30 ET,Series tied 0-0,NBA Finals,,,,,,,,
+0042500402,2026-06-05,Scheduled,2026-06-05 20:30 ET,Series tied 0-0,NBA Finals,,,,,,,,
+0042500403,2026-06-08,Scheduled,2026-06-08 20:30 ET,Series tied 0-0,NBA Finals,,,,,,,,
+0042500404,2026-06-10,Scheduled,2026-06-10 20:30 ET,Series tied 0-0,NBA Finals,,,,,,,,
+0042500405,2026-06-13,Scheduled,2026-06-13 20:30 ET,Series tied 0-0,NBA Finals,,,,,,,,
+0042500406,2026-06-16,Scheduled,2026-06-16 20:30 ET,Series tied 0-0,NBA Finals,,,,,,,,
+0042500407,2026-06-19,Scheduled,2026-06-19 20:30 ET,Series tied 0-0,NBA Finals,,,,,,,,
